@@ -14,15 +14,25 @@
             flex-grow: 2; /* default 0 */
         }
 
-        .container {
-          display: flex; /* or inline-flex */
-          height: 95vh;
+        #myCanvas {
+          width: 60px;
+          height: 60px;
         }
 
-        .item {
-          flex-grow: 1; /* default 0 */
-          background: red;
-          width: 200px;
+        .container {
+          display: flex; /* or inline-flex */
+          height: 99vh;
+        }
+
+        #settings {
+          box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.25);
+          width: 300px;
+          background: white;
+          border-radius: 20px;
+          position: absolute;
+          left: 0;
+          height: 95%;
+          margin: 20px;
         }
 
         #info-card {
@@ -32,8 +42,8 @@
           border-radius: 20px;
           position: absolute;
           right: 0;
-          height: inherit;
-          margin-right: 20px;
+          height: 95%;
+          margin: 20px;
         }
 
         .circular--portrait {
@@ -57,9 +67,12 @@
 </head>
 <body>
 <div class="container">
-  <div class="item"></div>
+</div>
+<div class="container">
   <div id="mynetwork"></div>
+  <div id="settings"></div>
   <div id="info-card" style="display: none">
+    <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="neighbourhoodHighlight();toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;">
     <center style="padding:20px">
       <div class="circular--portrait">
         <img id="info-card-img" src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"></img>
@@ -67,14 +80,60 @@
     </center>
   </div>
 </div>
+
 <script type="text/javascript">
 
     var nodes = new vis.DataSet([]);
     <% @nazisNodes.each do |node| %>
+
+
+     //   var img = new Image();
+     //   var c=document.createElement("canvas");
+     //   c.setAttribute("id","myCanvas");
+     //   var ctx=c.getContext("2d");
+     //   ctx.imageSmoothingQuality = "high";
+     //   var imageObj1 = new Image();
+     //   var imageObj2 = new Image();
+     //   imageObj1.src = "Hitler_portrait_crop.jpeg"
+
+     //   imageObj1.onload = function() {
+
+     //         var MAX_WIDTH = 60;
+     //         var MAX_HEIGHT = 60;
+     //         var width = imageObj1.width;
+     //         var height = imageObj1.height;
+
+     // // Add the resizing logic
+     //         if (width > height) {
+     //           if (width > MAX_WIDTH) {
+     //             height *= MAX_WIDTH / width;
+     //             width = MAX_WIDTH;
+     //           }
+     //         } else {
+     //           if (height > MAX_HEIGHT) {
+     //             width *= MAX_HEIGHT / height;
+     //             height = MAX_HEIGHT;
+     //           }
+     //         }
+
+     // //Specify the resizing result
+     //         c.width = width;
+     //         c.height = height;
+     //         ctx.drawImage(imageObj1, 0, 0, width, height);
+
+     //      // ctx.drawImage(imageObj1, 0, 0, 30, 30);
+     //      imageObj2.src = "redBackground.png";
+     //      imageObj2.onload = function() {
+     //         ctx.drawImage(imageObj2, 0, 0, width, height);
+     //         img.src = c.toDataURL("image/png",[0.0,1.0]);
+
+     //      }
+     //   };
+
       nodes.add({
           id: '<%= node['Name'] %>',
           shape: 'circularImage',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/d/dc/Adolf_Hitler_cropped_restored.jpg',
+          image: '/Hitler_portrait_crop.jpeg',
           label: '<%= node['Name'] %>',
           widthMin: 20,
           widthMax: 20
@@ -132,7 +191,7 @@
           solver: 'forceAtlas2Based',
           forceAtlas2Based: {
             theta: 0.5,
-            gravitationalConstant: -100,
+            gravitationalConstant: -50,
             centralGravity: 0.01,
             springConstant: 0.08,
             springLength: 200,
@@ -162,19 +221,7 @@
       // LISTENERS FOR NODE CLICK ACTION
       network.on('click', function(properties) {
           neighbourhoodHighlight(properties);
-          var ids = properties.nodes;
-          var clickedNodes = nodes.get(ids);
-          if (clickedNodes != ""){
-            $('#info-card-img').attr("src",clickedNodes[0]['image']);
-            $('#info-card').fadeIn();
-          }
-          else {
-            $('#info-card').fadeOut();
-            $('#info-card').promise().done(function(){
-                // will be called when all the animations on the queue finish
-                $('#info-card-img').attr("src",'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg');
-            });
-          }
+          toggleInfoCard(properties);
       });
 
       // DISABLE PHYSICS
@@ -182,32 +229,11 @@
           network.setOptions( { physics: false } );
       });
 
-      // LOADING BAR
-      network.on("stabilizationProgress", function (params) {
-        var maxWidth = 496;
-        var minWidth = 20;
-        var widthFactor = params.iterations / params.total;
-        var width = Math.max(minWidth, maxWidth * widthFactor);
-
-        document.getElementById("bar").style.width = width + "px";
-        document.getElementById("text").innerText =
-          Math.round(widthFactor * 100) + "%";
-      });
-      network.once("stabilizationIterationsDone", function () {
-        document.getElementById("text").innerText = "100%";
-        document.getElementById("bar").style.width = "496px";
-        document.getElementById("loadingBar").style.opacity = 0;
-        // really clean the dom element
-        setTimeout(function () {
-          document.getElementById("loadingBar").style.display = "none";
-        }, 500);
-      });
-
     }
 
     function updateNodeSize(){
       for (var nodeId in allNodes) {
-        allNodes[nodeId].size = 30+network.getConnectedEdges(nodeId).length;
+        allNodes[nodeId].size = 2*network.getConnectedEdges(nodeId).length;
       }
       // transform the object into an array
       var updateArray = [];
@@ -221,7 +247,7 @@
 
     function neighbourhoodHighlight(params) {
         // if something is selected:
-        if (params.nodes.length > 0) {
+        if (params && params.nodes.length > 0) {
           highlightActive = true;
           var i, j;
           var selectedNode = params.nodes[0];
@@ -298,7 +324,22 @@
           }
         }
         nodes.update(updateArray);
-      }
+    }
+
+    function toggleInfoCard(properties){
+        if (properties && nodes.get(properties.nodes) != ""){
+          var clickedNodes = nodes.get(properties.nodes);
+          $('#info-card-img').attr("src",clickedNodes[0]['image']);
+          $('#info-card').fadeIn();
+        }
+        else {
+          $('#info-card').fadeOut();
+          $('#info-card').promise().done(function(){
+              // will be called when all the animations on the queue finish
+              $('#info-card-img').attr("src",'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg');
+          });
+        }
+    }
 
     redrawAll();
 
