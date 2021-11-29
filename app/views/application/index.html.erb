@@ -10,6 +10,25 @@
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
     <style type="text/css">
+
+        body{
+          background: #282828;
+          font-family: "Bebas Neue";
+        }
+
+        h1 {
+          font-size:  288px;
+          margin: 0px;
+          margin-top: 10vh;
+        }
+
+        h2 {
+          font-size: 200px;
+          margin: 0px;
+          margin-top: -15vh;
+          margin-left: 30vw;
+        }
+
         #mynetwork {
             flex-grow: 2; /* default 0 */
         }
@@ -60,19 +79,140 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
-
         }
+
+        .headerLink {
+          padding: 20px;
+          color: white;
+          font-size: 24px;
+        }
+
+        .headerLink:hover{
+          transition: 0.3s;
+          font-size: 28px;
+          text-shadow: 2px 2px 8px white;
+        }
+
+        #loadingBar {
+          position: absolute;
+          left: 0px;
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(200, 200, 200, 0.8);
+          -webkit-transition: all 0.5s ease;
+          -moz-transition: all 0.5s ease;
+          -ms-transition: all 0.5s ease;
+          -o-transition: all 0.5s ease;
+          transition: all 0.5s ease;
+          opacity: 1;
+        }
+
+        #text {
+          position: absolute;
+          top: 8px;
+          left: 530px;
+          width: 30px;
+          height: 50px;
+          margin: auto auto auto auto;
+          font-size: 22px;
+          color: #000000;
+        }
+
+        div.outerBorder {
+          position: relative;
+          top: 400px;
+          width: 600px;
+          height: 44px;
+          margin: auto auto auto auto;
+          border: 8px solid rgba(0, 0, 0, 0.1);
+          background: rgb(252, 252, 252); /* Old browsers */
+          background: -moz-linear-gradient(
+            top,
+            rgba(252, 252, 252, 1) 0%,
+            rgba(237, 237, 237, 1) 100%
+          ); /* FF3.6+ */
+          background: -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            color-stop(0%, rgba(252, 252, 252, 1)),
+            color-stop(100%, rgba(237, 237, 237, 1))
+          ); /* Chrome,Safari4+ */
+          background: -webkit-linear-gradient(
+            top,
+            rgba(252, 252, 252, 1) 0%,
+            rgba(237, 237, 237, 1) 100%
+          ); /* Chrome10+,Safari5.1+ */
+          background: -o-linear-gradient(
+            top,
+            rgba(252, 252, 252, 1) 0%,
+            rgba(237, 237, 237, 1) 100%
+          ); /* Opera 11.10+ */
+          background: -ms-linear-gradient(
+            top,
+            rgba(252, 252, 252, 1) 0%,
+            rgba(237, 237, 237, 1) 100%
+          ); /* IE10+ */
+          background: linear-gradient(
+            to bottom,
+            rgba(252, 252, 252, 1) 0%,
+            rgba(237, 237, 237, 1) 100%
+          ); /* W3C */
+          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0); /* IE6-9 */
+          border-radius: 72px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #border {
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          width: 500px;
+          height: 23px;
+          margin: auto auto auto auto;
+          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+          border-radius: 10px;
+        }
+
+        #bar {
+          position: absolute;
+          top: 0px;
+          left: 0px;
+          width: 20px;
+          height: 20px;
+          margin: auto auto auto auto;
+          border-radius: 11px;
+          border: 2px solid rgba(30, 30, 30, 0.05);
+          background: rgb(0, 173, 246); /* Old browsers */
+          box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.4);
+        }
+
 
     </style>
 </head>
 <body>
-<div class="container">
+<div class="container" style="flex-direction: column;">
+    <div style="text-align: right;padding: 10px;">
+        <span class="headerLink">THE PROJECT</span>
+        <span class="headerLink">THE NETWORK</span>
+        <span class="headerLink">THE RESULTS</span>
+    </div>
+    <center>
+        <h1>NEUTRALITY</h1>
+        <h2>A CASE STUDY</h2>
+    </center>
 </div>
 <div class="container">
   <div id="mynetwork"></div>
-  <div id="settings">
-
+  <div id="loadingBar">
+    <div class="outerBorder">
+      <div id="text">0%</div>
+      <div id="border">
+        <div id="bar"></div>
+      </div>
+    </div>
   </div>
+  <div id="settings"></div>
   <div id="info-card" style="display: none">
     <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="neighbourhoodHighlight();toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;">
     <center style="padding:20px">
@@ -84,9 +224,6 @@
 </div>
 
 <script type="text/javascript">
-
-    var GCCnodes = new vis.DataSet([]);
-    buildGCCNodes();
 
     function buildGCCNodes(){
 
@@ -102,52 +239,11 @@
         <% end %>
     }
 
+    var GCCnodes = new vis.DataSet([]);
+    buildGCCNodes();
+
     var nodes = new vis.DataSet([]);
     <% @nazisNodes.each do |node| %>
-
-
-     //   var img = new Image();
-     //   var c=document.createElement("canvas");
-     //   c.setAttribute("id","myCanvas");
-     //   var ctx=c.getContext("2d");
-     //   ctx.imageSmoothingQuality = "high";
-     //   var imageObj1 = new Image();
-     //   var imageObj2 = new Image();
-     //   imageObj1.src = "Hitler_portrait_crop.jpeg"
-
-     //   imageObj1.onload = function() {
-
-     //         var MAX_WIDTH = 60;
-     //         var MAX_HEIGHT = 60;
-     //         var width = imageObj1.width;
-     //         var height = imageObj1.height;
-
-     // // Add the resizing logic
-     //         if (width > height) {
-     //           if (width > MAX_WIDTH) {
-     //             height *= MAX_WIDTH / width;
-     //             width = MAX_WIDTH;
-     //           }
-     //         } else {
-     //           if (height > MAX_HEIGHT) {
-     //             width *= MAX_HEIGHT / height;
-     //             height = MAX_HEIGHT;
-     //           }
-     //         }
-
-     // //Specify the resizing result
-     //         c.width = width;
-     //         c.height = height;
-     //         ctx.drawImage(imageObj1, 0, 0, width, height);
-
-     //      // ctx.drawImage(imageObj1, 0, 0, 30, 30);
-     //      imageObj2.src = "redBackground.png";
-     //      imageObj2.onload = function() {
-     //         ctx.drawImage(imageObj2, 0, 0, width, height);
-     //         img.src = c.toDataURL("image/png",[0.0,1.0]);
-
-     //      }
-     //   };
 
       nodes.add({
           id: '<%= node['Name'] %>',
@@ -201,6 +297,9 @@
           },
           selectionWidth: 3,
           width: 0.5,
+          smooth: {
+            forceDirection: "none"
+          }
         },
         physics: {
           stabilization: {
@@ -209,12 +308,12 @@
           },
           solver: 'forceAtlas2Based',
           forceAtlas2Based: {
-            theta: 0.5,
-            gravitationalConstant: -50,
+            theta: 0.8,
+            gravitationalConstant: -1000,
             centralGravity: 0.01,
             springConstant: 0.08,
-            springLength: 200,
-            damping: 0.4,
+            springLength: 3000,
+            damping: 0.1,
             avoidOverlap: 1
           }
         },
@@ -248,11 +347,31 @@
           network.setOptions( { physics: false } );
       });
 
+      network.on("stabilizationProgress", function (params) {
+        var maxWidth = 496;
+        var minWidth = 20;
+        var widthFactor = params.iterations / params.total;
+        var width = Math.max(minWidth, maxWidth * widthFactor);
+
+        document.getElementById("bar").style.width = width + "px";
+        document.getElementById("text").innerText =
+          Math.round(widthFactor * 100) + "%";
+      });
+      network.once("stabilizationIterationsDone", function () {
+        document.getElementById("text").innerText = "100%";
+        document.getElementById("bar").style.width = "496px";
+        document.getElementById("loadingBar").style.opacity = 0;
+        // really clean the dom element
+        setTimeout(function () {
+          document.getElementById("loadingBar").style.display = "none";
+        }, 500);
+      });
+
     }
 
     function updateNodeSize(){
       for (var nodeId in allNodes) {
-        allNodes[nodeId].size = 2*network.getConnectedEdges(nodeId).length;
+        allNodes[nodeId].size = 100+5*network.getConnectedEdges(nodeId).length;
       }
       // transform the object into an array
       var updateArray = [];
