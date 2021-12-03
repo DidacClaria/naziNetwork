@@ -6,8 +6,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre&family=Alatsi&family=Bebas+Neue&family=Poppins&family=Federant&display=swap" rel="stylesheet">
     <!-- LIBRARIES -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script type="text/javascript" src="/js-colormaps.js"></script>
 
     <style type="text/css">
 
@@ -16,13 +18,13 @@
           font-family: "Bebas Neue";
         }
 
-        h1 {
+        .top-title {
           font-size:  288px;
           margin: 0px;
           margin-top: 10vh;
         }
 
-        h2 {
+        .bottom-title {
           font-size: 200px;
           margin: 0px;
           margin-top: -15vh;
@@ -187,6 +189,21 @@
           box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.4);
         }
 
+        #legend {
+          position: absolute;
+          bottom: 5px;
+          left: 310px;
+        }
+
+        #legendBar {
+          height: 11px;
+          width: 253px;
+          border-radius: 71px;
+        }
+
+        #cardname {
+          padding: 10px;
+        }
 
     </style>
 </head>
@@ -198,32 +215,231 @@
         <span class="headerLink">THE RESULTS</span>
     </div>
     <center>
-        <h1>NEUTRALITY</h1>
-        <h2>A CASE STUDY</h2>
+        <h1 class="top-title">NEUTRALITY</h1>
+        <h1 class="bottom-title">A CASE STUDY</h1>
     </center>
 </div>
 <div class="container">
   <div id="mynetwork"></div>
-  <div id="loadingBar">
+  <!-- <div id="loadingBar">
     <div class="outerBorder">
       <div id="text">0%</div>
       <div id="border">
         <div id="bar"></div>
       </div>
     </div>
+  </div> -->
+  <div id="settings">
+    <div style="padding: 0px 20px 20px 20px">
+      <h1>Network Settings</h1>
+      <br>
+      <div style="font-size: 1.17em;">Show</div>
+      <hr>
+      <input type="radio" id="subjectivitylevel" name="show" value="subjectivitylevel" onclick="changeNodeImage(this.value)">
+      <label for="subjectivitylevel">Subjectivity Level</label><br>
+      <input type="radio" id="pictures" name="show" value="pictures" onclick="changeNodeImage(this.value)">
+      <label for="pictures">Pictures</label><br><br><br>
+
+      <div style="font-size: 1.17em;">Link by</div>
+      <hr>
+      <input type="radio" id="social_links" name="link" value="social_links" onclick="changeLinks(this.value)">
+      <label for="social_links">Social links</label><br>
+      <input type="radio" id="author_links" name="link" value="author_links" onclick="changeLinks(this.value)">
+      <label for="author_links">Author links</label><br><br><br>
+
+      <div style="font-size: 1.17em;">Change language</div>
+      <hr>
+      <div style="
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+      " value="english" onclick="changeLanguage(this.value)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png" style="
+            width: 32px;
+            height: 32px;
+            border-radius: 50px;
+        ">
+        <div style="align-self: center;padding-left: 15px;">ENGLISH</div>
+      </div>
+      <div style="
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+          margin-top: 10px;
+      " value="french" onclick="changeLanguage(this.value)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" style="
+            width: 32px;
+            height: 32px;
+            border-radius: 50px;
+        ">
+        <div style="align-self: center;padding-left: 15px;">FRENCH</div>
+      </div>
+      <div style="
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+          margin-top: 10px;
+      " value="italian" onclick="changeLanguage(this.value)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" style="
+            width: 32px;
+            height: 32px;
+            border-radius: 50px;
+        ">
+        <div style="align-self: center;padding-left: 15px;">ITALIAN</div>
+      </div>
+      <div style="
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+          margin-top: 10px;
+      " value="polish" onclick="changeLanguage(this.value)">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" style="
+            width: 32px;
+            height: 32px;
+            border-radius: 50px;
+        ">
+        <div style="align-self: center;padding-left: 15px;">POLISH</div>
+      </div>
+
+
+
+
+    </div>
+    <div id="legend">
+      <center style="color:white">Subjectivity level</center>
+      <img src="/images/colorLegend.png" id="legendBar"></img>
+      <div style="display: flex;justify-content: space-between; color: white;">
+        <span>0</span>
+        <span>1</span>
+      </div>
+    </div>  
   </div>
-  <div id="settings"></div>
   <div id="info-card" style="display: none">
-    <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="neighbourhoodHighlight();toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;">
+    <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;">
     <center style="padding:20px">
       <div class="circular--portrait">
         <img id="info-card-img" src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"></img>
       </div>
+      <div id='cardname'></div>
+      <div>Article Attributes</div>
+      <canvas id="horizontalBarChartCanvas"></canvas>
     </center>
   </div>
 </div>
 
 <script type="text/javascript">
+  var horizontalBarChart = new Chart(horizontalBarChartCanvas, {
+   type: 'horizontalBar',
+   data: {
+      labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7"],
+      datasets: [{
+         data: [2000, 4000, 6000, 8000, 10000, 12000, 14000],
+         backgroundColor: ["#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8"], 
+      }]
+   },
+   options: {
+      tooltips: {
+        enabled: false
+      },
+      responsive: true,
+      legend: {
+         display: false,
+         position: 'bottom',
+         fullWidth: true,
+         labels: {
+           boxWidth: 10,
+           padding: 50
+         }
+      },
+      scales: {
+         yAxes: [{
+           barPercentage: 0.75,
+           gridLines: {
+             display: true,
+             drawTicks: true,
+             drawOnChartArea: false
+           },
+           ticks: {
+             fontColor: '#555759',
+             fontFamily: 'Lato',
+             fontSize: 11
+           }
+            
+         }],
+         xAxes: [{
+             gridLines: {
+               display: true,
+               drawTicks: false,
+               tickMarkLength: 5,
+               drawBorder: false
+             },
+           ticks: {
+             padding: 5,
+             beginAtZero: true,
+             fontColor: '#555759',
+             fontFamily: 'Lato',
+             fontSize: 11,
+             callback: function(label, index, labels) {
+              return label/1000;
+             }
+               
+           },
+            scaleLabel: {
+              display: true,
+              padding: 10,
+              fontFamily: 'Lato',
+              fontColor: '#555759',
+              fontSize: 16,
+              fontStyle: 700,
+              labelString: 'Scale Label'
+            },
+           
+         }]
+      }
+   }
+});
+
+
+</script>
+
+<script type="text/javascript">
+
+    function buildSocialNodesAndEdges(){
+      <% @nazisNodes.each do |node| %>
+        v = <%= node['Subjectivity Level'].to_f %>;
+        sentiment = v/<%= @maxSentiment %>;
+        sentimentH =  v+0.2/<%= @maxSentiment %>;
+        sentimentMapping = "rgb("+evaluate_cmap(sentiment, 'RdYlGn', true).toString()+")";
+        sentimentMappingH = "rgb("+evaluate_cmap(sentimentH, 'RdYlGn', true).toString()+")";
+        <% 
+          name = node['Name']
+          name = name.gsub("_"," ")
+        %>
+        socialNodes.add({
+            id: '<%= node['Name'] %>',
+            shape: 'dot',
+            // shape: 'circularImage',
+            image: 'images/Hitler_portrait_crop.jpeg',
+            color: {
+              background: sentimentMapping,
+              border: sentimentMapping,
+              highlight:{
+                background: sentimentMapping,
+                border: sentimentMappingH
+              } 
+            },
+            label: '<%= name %>'
+        });
+      <% end %>
+
+      <% @nazisLinks.each do |link| %>
+        socialEdges.add({from: '<%= link['Source Node']%>', to: '<%=link['Target Node']%>'});
+      <% end %>
+    }
 
     function buildGCCNodes(){
 
@@ -239,30 +455,56 @@
         <% end %>
     }
 
+    function buildAuthorNodesAndEdges(){
+      <% @authorNodes.each do |node| %>
+        v = <%= node['Subjectivity Level'].to_f %>;
+        sentiment = v/<%= @maxSentiment %>;
+        sentimentH =  v+0.2/<%= @maxSentiment %>;
+        sentimentMapping = "rgb("+evaluate_cmap(sentiment, 'RdYlGn', true).toString()+")";
+        sentimentMappingH = "rgb("+evaluate_cmap(sentimentH, 'RdYlGn', true).toString()+")";
+        <% 
+          name = node['Name']
+          name = name.gsub("_"," ")
+        %>
+        authorNodes.add({
+            id: '<%= node['Name'] %>',
+            shape: 'dot',
+            // shape: 'circularImage',
+            image: 'images/Hitler_portrait_crop.jpeg',
+            color: {
+              background: sentimentMapping,
+              border: sentimentMapping,
+              highlight:{
+                background: sentimentMapping,
+                border: sentimentMappingH
+              } 
+            },
+            label: '<%= name %>',
+            size: '<%= node['NumAuthors'] %>'
+        });
+      <% end %>
+
+      <% @authorLinks.each do |link| %>
+        authorEdges.add({from: '<%= link['Source Node']%>', to: '<%=link['Target Node']%>', value: '<%=link['Weight']%>'});
+      <% end %>
+    }
+
+    var socialNodes = new vis.DataSet([]);
+    var socialEdges = new vis.DataSet([]);
+    buildSocialNodesAndEdges();
+
+    var authorNodes = new vis.DataSet([]);
+    var authorEdges = new vis.DataSet([]);
+    buildAuthorNodesAndEdges();
+
     var GCCnodes = new vis.DataSet([]);
     buildGCCNodes();
-
-    var nodes = new vis.DataSet([]);
-    <% @nazisNodes.each do |node| %>
-
-      nodes.add({
-          id: '<%= node['Name'] %>',
-          shape: 'circularImage',
-          image: '/Hitler_portrait_crop.jpeg',
-          label: '<%= node['Name'] %>',
-          widthMin: 20,
-          widthMax: 20
-      });
-    <% end %>
-
-    var edges = new vis.DataSet([]);
-    <% @nazisLinks.each do |link| %>
-      edges.add({from: '<%= link['Source Node']%>', to: '<%=link['Target Node']%>'});
-    <% end %>
-
-    var network;
-    var allNodes;
+    
+    var nodes = socialNodes;
+    var edges = socialEdges;
+    var network, allNodes;
     var highlightActive = false;
+    var authorActive = false;
 
 
     function redrawAll() {
@@ -270,7 +512,7 @@
       var options = {
         nodes:{
           borderWidth: 0,
-          borderWidthSelected: 0,
+          borderWidthSelected: 3,
           brokenImage:undefined,
           fixed: false,
           font: {
@@ -289,29 +531,41 @@
         },
         edges:{
           color: {
-            opacity:0.5
+            // color: 'white',
+            opacity:0.2
           },
-          selectionWidth: 3,
+          selectionWidth: 50,
           width: 0.5,
           smooth: {
             forceDirection: "none"
           }
         },
+        //FOR THE LOADING BAR
+        // physics: {
+        //   stabilization: {
+        //       enabled: true,
+        //       fit: true
+        //   },
+        //   solver: 'forceAtlas2Based',
+        //   forceAtlas2Based: {
+        //     theta: 0.8,
+        //     gravitationalConstant: -1000,
+        //     centralGravity: 0.01,
+        //     springConstant: 0.08,
+        //     springLength: 3000,
+        //     damping: 0.1,
+        //     avoidOverlap: 1
+        //   }
+        // },
+        // STABILIZATION PROCESS SHOWN
         physics: {
-          stabilization: {
-              enabled: true,
-              fit: true
+          stabilization: false,
+          barnesHut: {
+            gravitationalConstant: -80000,
+            springConstant: 0.001,
+            springLength: 200,
+            avoidOverlap: 0.5
           },
-          solver: 'forceAtlas2Based',
-          forceAtlas2Based: {
-            theta: 0.8,
-            gravitationalConstant: -1000,
-            centralGravity: 0.01,
-            springConstant: 0.08,
-            springLength: 3000,
-            damping: 0.1,
-            avoidOverlap: 1
-          }
         },
         layout: {
           improvedLayout:false
@@ -329,8 +583,10 @@
       // get a JSON object
       allNodes = nodes.get({ returnType: "Object" });
 
-      // SET NODE SIZE ACCORDING TO THE PARAM
-      updateNodeSize();
+      // SET NODE SIZE ACCORDING TO THE DEGREE
+      if (!authorActive){
+        updateNodeSize();
+      }
 
       // LISTENERS FOR NODE CLICK ACTION
       network.on('click', function(properties) {
@@ -339,35 +595,36 @@
       });
 
       // DISABLE PHYSICS
-      network.on("stabilizationIterationsDone", function () {
-          network.setOptions( { physics: false } );
-      });
+      // network.on("stabilizationIterationsDone", function () {
+      //     network.setOptions( { physics: false } );
+      // });
 
-      network.on("stabilizationProgress", function (params) {
-        var maxWidth = 496;
-        var minWidth = 20;
-        var widthFactor = params.iterations / params.total;
-        var width = Math.max(minWidth, maxWidth * widthFactor);
+      // network.on("stabilizationProgress", function (params) {
+      //   var maxWidth = 496;
+      //   var minWidth = 20;
+      //   var widthFactor = params.iterations / params.total;
+      //   var width = Math.max(minWidth, maxWidth * widthFactor);
 
-        document.getElementById("bar").style.width = width + "px";
-        document.getElementById("text").innerText =
-          Math.round(widthFactor * 100) + "%";
-      });
-      network.once("stabilizationIterationsDone", function () {
-        document.getElementById("text").innerText = "100%";
-        document.getElementById("bar").style.width = "496px";
-        document.getElementById("loadingBar").style.opacity = 0;
-        // really clean the dom element
-        setTimeout(function () {
-          document.getElementById("loadingBar").style.display = "none";
-        }, 500);
-      });
+      //   document.getElementById("bar").style.width = width + "px";
+      //   document.getElementById("text").innerText =
+      //     Math.round(widthFactor * 100) + "%";
+      // });
+      // network.once("stabilizationIterationsDone", function () {
+      //   document.getElementById("text").innerText = "100%";
+      //   document.getElementById("bar").style.width = "496px";
+      //   document.getElementById("loadingBar").style.opacity = 0;
+      //   // really clean the dom element
+      //   setTimeout(function () {
+      //     document.getElementById("loadingBar").style.display = "none";
+      //   }, 500);
+      // });
 
     }
 
     function updateNodeSize(){
       for (var nodeId in allNodes) {
-        allNodes[nodeId].size = 100+5*network.getConnectedEdges(nodeId).length;
+        allNodes[nodeId].size = 5*network.getConnectedEdges(nodeId).length;
+        allNodes[nodeId].mass = network.getConnectedEdges(nodeId).length+1;
       }
       // transform the object into an array
       var updateArray = [];
@@ -389,12 +646,7 @@
 
           // mark all nodes as hard to read.
           for (var nodeId in allNodes) {
-            allNodes[nodeId].color = "rgba(200,200,200,0.5)";
             allNodes[nodeId].opacity = 0.1;
-            if (allNodes[nodeId].hiddenLabel === undefined) {
-              allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
-              allNodes[nodeId].label = undefined;
-            }
           }
           var connectedNodes = network.getConnectedNodes(selectedNode);
           var allConnectedNodes = [];
@@ -410,43 +662,24 @@
 
           // all second degree nodes get a different color and their label back
           for (i = 0; i < allConnectedNodes.length; i++) {
-            allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
             allNodes[nodeId].opacity = 0.8;
-            if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
-              allNodes[allConnectedNodes[i]].label =
-                allNodes[allConnectedNodes[i]].hiddenLabel;
-              allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
-            }
           }
 
           // all first degree nodes get their own color and their label back
           for (i = 0; i < connectedNodes.length; i++) {
-            allNodes[connectedNodes[i]].color = '#97C2FC';
             allNodes[connectedNodes[i]].opacity = 0.8;
-            if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
-              allNodes[connectedNodes[i]].label =
-                allNodes[connectedNodes[i]].hiddenLabel;
-              allNodes[connectedNodes[i]].hiddenLabel = undefined;
-            }
           }
 
           // the main node gets its own color and its label back.
-          allNodes[selectedNode].color = '#97C2FC';
           allNodes[selectedNode].opacity = 0.8;
-          if (allNodes[selectedNode].hiddenLabel !== undefined) {
-            allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
-            allNodes[selectedNode].hiddenLabel = undefined;
-          }
+          
         } else if (highlightActive === true) {
           // reset all nodes
           for (var nodeId in allNodes) {
-            allNodes[nodeId].color = '#97C2FC';
             allNodes[nodeId].opacity = 0.8;
-            if (allNodes[nodeId].hiddenLabel !== undefined) {
-              allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
-              allNodes[nodeId].hiddenLabel = undefined;
-            }
+            allNodes[nodeId].selectedNode = null;
           }
+
           highlightActive = false;
         }
 
@@ -464,15 +697,39 @@
         if (properties && nodes.get(properties.nodes) != ""){
           var clickedNodes = nodes.get(properties.nodes);
           $('#info-card-img').attr("src",clickedNodes[0]['image']);
+          $('#cardname').text(clickedNodes[0]['label']);
           $('#info-card').fadeIn();
         }
         else {
+          $('#cardname').text('');
           $('#info-card').fadeOut();
           $('#info-card').promise().done(function(){
               // will be called when all the animations on the queue finish
               $('#info-card-img').attr("src",'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg');
           });
         }
+    }
+
+    function changeNodeImage(value){
+
+    }
+
+    function changeLanguage(value){
+
+    }
+
+    function changeLinks(value){
+      if(value=="author_links"){
+        author = true;
+        nodes = authorNodes;
+        edges = authorEdges;
+      }
+      else if(value=="social_links"){
+        author = false; 
+        nodes = socialNodes;
+        edges = socialEdges;
+      }
+      redrawAll();
     }
 
     redrawAll();
