@@ -8,7 +8,6 @@
     <!-- LIBRARIES -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script type="text/javascript" src="/js-colormaps.js"></script>
 
     <style type="text/css">
@@ -71,10 +70,11 @@
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 200px;
-          height: 200px;
+          width: 150px;
+          height: 150px;
           overflow: hidden;
           border-radius: 50%;
+          border: 10px solid lightgray;
         }
 
         .circular--portrait img {
@@ -205,6 +205,38 @@
           padding: 10px;
         }
 
+        .language {
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+          margin-top: 10px;
+        }
+
+        .languageClicked {
+          padding: 10px;
+          border-radius: 10px;
+          box-shadow: 0px 0px 5px 0px lightgray;
+          display: flex;
+          margin-top: 10px;
+          background: cornflowerblue;
+          color: white;
+        }
+
+        .flag {
+          width: 32px;
+          height: 32px;
+          border-radius: 50px;
+          border: 1px solid;
+        }
+
+        .sentimentBar {
+          background: red;
+          width: 220px;
+          height: 20px;
+          border-radius: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -232,76 +264,40 @@
   <div id="settings">
     <div style="padding: 0px 20px 20px 20px">
       <h1>Network Settings</h1>
-      <br>
       <div style="font-size: 1.17em;">Show</div>
       <hr>
-      <input type="radio" id="subjectivitylevel" name="show" value="subjectivitylevel" onclick="changeNodeImage(this.value)">
-      <label for="subjectivitylevel">Subjectivity Level</label><br>
+      <input type="radio" id="colors" name="show" value="colors" onclick="changeNodeImage(this.value)">
+      <label for="colors">Subjectivity Level</label><br>
       <input type="radio" id="pictures" name="show" value="pictures" onclick="changeNodeImage(this.value)">
-      <label for="pictures">Pictures</label><br><br><br>
+      <label for="pictures">Pictures</label><br><br>
 
       <div style="font-size: 1.17em;">Link by</div>
       <hr>
       <input type="radio" id="social_links" name="link" value="social_links" onclick="changeLinks(this.value)">
       <label for="social_links">Social links</label><br>
       <input type="radio" id="author_links" name="link" value="author_links" onclick="changeLinks(this.value)">
-      <label for="author_links">Author links</label><br><br><br>
+      <label for="author_links">Author links</label><br><br>
 
-      <div style="font-size: 1.17em;">Change language</div>
+      <div style="font-size: 1.17em;">Change subjectivity language</div>
       <hr>
-      <div style="
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 5px 0px lightgray;
-          display: flex;
-      " value="english" onclick="changeLanguage(this.value)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png" style="
-            width: 32px;
-            height: 32px;
-            border-radius: 50px;
-        ">
+      <div id="eng" class="language" style="margin: 0px" value="english" onclick="changeLanguage(this.id)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png" class="flag">
         <div style="align-self: center;padding-left: 15px;">ENGLISH</div>
       </div>
-      <div style="
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 5px 0px lightgray;
-          display: flex;
-          margin-top: 10px;
-      " value="french" onclick="changeLanguage(this.value)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" style="
-            width: 32px;
-            height: 32px;
-            border-radius: 50px;
-        ">
+      <div id="ger" class="language" value="german" onclick="changeLanguage(this.id)">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" class="flag">
+        <div style="align-self: center;padding-left: 15px;">GERMAN</div>
+      </div>
+      <div id="frc" class="language" value="french" onclick="changeLanguage(this.id)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" class="flag">
         <div style="align-self: center;padding-left: 15px;">FRENCH</div>
       </div>
-      <div style="
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 5px 0px lightgray;
-          display: flex;
-          margin-top: 10px;
-      " value="italian" onclick="changeLanguage(this.value)">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" style="
-            width: 32px;
-            height: 32px;
-            border-radius: 50px;
-        ">
+      <div id="ita" class="language" value="italian" onclick="changeLanguage(this.id)">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" class="flag">
         <div style="align-self: center;padding-left: 15px;">ITALIAN</div>
       </div>
-      <div style="
-          padding: 10px;
-          border-radius: 10px;
-          box-shadow: 0px 0px 5px 0px lightgray;
-          display: flex;
-          margin-top: 10px;
-      " value="polish" onclick="changeLanguage(this.value)">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" style="
-            width: 32px;
-            height: 32px;
-            border-radius: 50px;
-        ">
+      <div id="pol" class="language" value="polish" onclick="changeLanguage(this.id)">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" class="flag">
         <div style="align-self: center;padding-left: 15px;">POLISH</div>
       </div>
 
@@ -319,92 +315,52 @@
     </div>  
   </div>
   <div id="info-card" style="display: none">
-    <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;">
+    <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;position: absolute; top:0%;">
     <center style="padding:20px">
       <div class="circular--portrait">
         <img id="info-card-img" src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"></img>
       </div>
-      <div id='cardname'></div>
-      <div>Article Attributes</div>
-      <canvas id="horizontalBarChartCanvas"></canvas>
+      <div id='cardname' style="font-size: 2em;"></div>
+      <div style="text-align-last: left;">Article Attributes</div>
+      <hr style="margin-top: 0px;">
+      <div style="display:flex; justify-content: space-between;">
+        <span>Edit Permissions</span>
+        <span id="editpermissions">Blue Lock</span>
+      </div>
+      <div style="display:flex; justify-content: space-between;">
+        <span>Number of authors</span>
+        <span id="numAuthors">1000</span>
+      </div>
+      <div style="display:flex; justify-content: space-between;">
+        <span>Number of sources</span>
+        <span id="numSources">100</span>
+      </div>
+      <div style="display:flex; justify-content: space-between;">
+        <span>Languages</span>
+        <span id="numLanguages">English, French, German</span>
+      </div>
+      <br>
+      <div style="text-align-last: left;">Subjectivity levels</div>
+      <hr style="margin-top: 0px;">
+      <div style="display:flex; flex-direction: row;">
+        <div style="display:flex; flex-direction: column; row-gap: 5px;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png" class="flag">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" class="flag">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" class="flag">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" class="flag">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" class="flag">
+        </div>
+        <div style="display:flex; flex-direction: column; row-gap: 5px;padding-left: 10px;justify-content: space-around;">
+          <div id="engSent" class="sentimentBar"></div>
+          <div id="gerSent" class="sentimentBar"></div>
+          <div id="frcSent" class="sentimentBar"></div>
+          <div id="itaSent" class="sentimentBar"></div>
+          <div id="polSent" class="sentimentBar"></div>
+        </div>
+      </div>
     </center>
   </div>
 </div>
-
-<script type="text/javascript">
-  var horizontalBarChart = new Chart(horizontalBarChartCanvas, {
-   type: 'horizontalBar',
-   data: {
-      labels: ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5", "Label 6", "Label 7"],
-      datasets: [{
-         data: [2000, 4000, 6000, 8000, 10000, 12000, 14000],
-         backgroundColor: ["#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8", "#73BFB8"], 
-      }]
-   },
-   options: {
-      tooltips: {
-        enabled: false
-      },
-      responsive: true,
-      legend: {
-         display: false,
-         position: 'bottom',
-         fullWidth: true,
-         labels: {
-           boxWidth: 10,
-           padding: 50
-         }
-      },
-      scales: {
-         yAxes: [{
-           barPercentage: 0.75,
-           gridLines: {
-             display: true,
-             drawTicks: true,
-             drawOnChartArea: false
-           },
-           ticks: {
-             fontColor: '#555759',
-             fontFamily: 'Lato',
-             fontSize: 11
-           }
-            
-         }],
-         xAxes: [{
-             gridLines: {
-               display: true,
-               drawTicks: false,
-               tickMarkLength: 5,
-               drawBorder: false
-             },
-           ticks: {
-             padding: 5,
-             beginAtZero: true,
-             fontColor: '#555759',
-             fontFamily: 'Lato',
-             fontSize: 11,
-             callback: function(label, index, labels) {
-              return label/1000;
-             }
-               
-           },
-            scaleLabel: {
-              display: true,
-              padding: 10,
-              fontFamily: 'Lato',
-              fontColor: '#555759',
-              fontSize: 16,
-              fontStyle: 700,
-              labelString: 'Scale Label'
-            },
-           
-         }]
-      }
-   }
-});
-
-
-</script>
 
 <script type="text/javascript">
 
@@ -429,7 +385,7 @@
               border: sentimentMapping,
               highlight:{
                 background: sentimentMapping,
-                border: sentimentMappingH
+                border: "white"
               } 
             },
             label: '<%= name %>'
@@ -618,13 +574,37 @@
       //     document.getElementById("loadingBar").style.display = "none";
       //   }, 500);
       // });
+      
+      fitAnimated();
 
+    }
+
+    function fitAnimated() {
+      offsetx = 0;
+      offsety = 0;
+      duration = 1000;
+      scale = 0.04;
+      positionx = 300;
+      positiony = 300;
+      easingFunction = 'easeInOutQuad';
+
+      var options = {
+        position: { x: positionx, y: positiony },
+        scale: scale,
+        offset: { x: offsetx, y: offsety },
+        animation: {
+          duration: duration,
+          easingFunction: easingFunction,
+        },
+      };
+
+      network.moveTo(options);
     }
 
     function updateNodeSize(){
       for (var nodeId in allNodes) {
         allNodes[nodeId].size = 5*network.getConnectedEdges(nodeId).length;
-        allNodes[nodeId].mass = network.getConnectedEdges(nodeId).length+1;
+        //allNodes[nodeId].mass = network.getConnectedEdges(nodeId).length+1;
       }
       // transform the object into an array
       var updateArray = [];
@@ -711,28 +691,53 @@
     }
 
     function changeNodeImage(value){
+      if (value == "pictures"){
+        for (var nodeId in allNodes) {
+            allNodes[nodeId].shape = 'circularImage';
+        }
+      }
+      else{
+        for (var nodeId in allNodes) {
+            allNodes[nodeId].shape = 'dot';
+        }
+      }
+
+      var updateArray = [];
+      for (nodeId in allNodes) {
+        if (allNodes.hasOwnProperty(nodeId)) {
+          updateArray.push(allNodes[nodeId]);
+        }
+      }
+      nodes.update(updateArray);
 
     }
 
-    function changeLanguage(value){
-
+    function changeLanguage(id){
+      document.getElementsByClassName('languageClicked')[0].className = 'language';
+      document.getElementById(id).className = 'languageClicked';
     }
 
     function changeLinks(value){
-      if(value=="author_links"){
-        author = true;
-        nodes = authorNodes;
-        edges = authorEdges;
-      }
-      else if(value=="social_links"){
-        author = false; 
-        nodes = socialNodes;
-        edges = socialEdges;
-      }
-      redrawAll();
+      // if(value=="author_links"){
+      //   author = true;
+      //   nodes = authorNodes;
+      //   edges = authorEdges;
+      // }
+      // else if(value=="social_links"){
+      //   author = false; 
+      //   nodes = socialNodes;
+      //   edges = socialEdges;
+      // }
+      // redrawAll();
     }
 
     redrawAll();
+
+    $(document).ready(function() {
+        document.getElementById('eng').className = 'languageClicked';      
+        document.getElementById('colors').checked = true;
+        document.getElementById('social_links').checked = true;      
+    });
 
 
 </script>
