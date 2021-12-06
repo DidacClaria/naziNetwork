@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
     subjList = @nazisNodes.flat_map { |node| node["Subjectivity Level"].to_f } 
 
-    @maxSentiment = subjList.max
+    @maxSubjectivity = subjList.max
 
     nodesGCCFile = File.read('public/data/naziNodesGCC.json')
     @nazisNodesGCC = JSON.parse(nodesGCCFile)

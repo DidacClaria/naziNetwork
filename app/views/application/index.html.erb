@@ -74,7 +74,6 @@
           height: 150px;
           overflow: hidden;
           border-radius: 50%;
-          border: 10px solid lightgray;
         }
 
         .circular--portrait img {
@@ -93,100 +92,6 @@
           transition: 0.3s;
           font-size: 28px;
           text-shadow: 2px 2px 8px white;
-        }
-
-        #loadingBar {
-          position: absolute;
-          left: 0px;
-          width: 100vw;
-          height: 100vh;
-          background-color: rgba(200, 200, 200, 0.8);
-          -webkit-transition: all 0.5s ease;
-          -moz-transition: all 0.5s ease;
-          -ms-transition: all 0.5s ease;
-          -o-transition: all 0.5s ease;
-          transition: all 0.5s ease;
-          opacity: 1;
-        }
-
-        #text {
-          position: absolute;
-          top: 8px;
-          left: 530px;
-          width: 30px;
-          height: 50px;
-          margin: auto auto auto auto;
-          font-size: 22px;
-          color: #000000;
-        }
-
-        div.outerBorder {
-          position: relative;
-          top: 400px;
-          width: 600px;
-          height: 44px;
-          margin: auto auto auto auto;
-          border: 8px solid rgba(0, 0, 0, 0.1);
-          background: rgb(252, 252, 252); /* Old browsers */
-          background: -moz-linear-gradient(
-            top,
-            rgba(252, 252, 252, 1) 0%,
-            rgba(237, 237, 237, 1) 100%
-          ); /* FF3.6+ */
-          background: -webkit-gradient(
-            linear,
-            left top,
-            left bottom,
-            color-stop(0%, rgba(252, 252, 252, 1)),
-            color-stop(100%, rgba(237, 237, 237, 1))
-          ); /* Chrome,Safari4+ */
-          background: -webkit-linear-gradient(
-            top,
-            rgba(252, 252, 252, 1) 0%,
-            rgba(237, 237, 237, 1) 100%
-          ); /* Chrome10+,Safari5.1+ */
-          background: -o-linear-gradient(
-            top,
-            rgba(252, 252, 252, 1) 0%,
-            rgba(237, 237, 237, 1) 100%
-          ); /* Opera 11.10+ */
-          background: -ms-linear-gradient(
-            top,
-            rgba(252, 252, 252, 1) 0%,
-            rgba(237, 237, 237, 1) 100%
-          ); /* IE10+ */
-          background: linear-gradient(
-            to bottom,
-            rgba(252, 252, 252, 1) 0%,
-            rgba(237, 237, 237, 1) 100%
-          ); /* W3C */
-          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0); /* IE6-9 */
-          border-radius: 72px;
-          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        #border {
-          position: absolute;
-          top: 10px;
-          left: 10px;
-          width: 500px;
-          height: 23px;
-          margin: auto auto auto auto;
-          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-          border-radius: 10px;
-        }
-
-        #bar {
-          position: absolute;
-          top: 0px;
-          left: 0px;
-          width: 20px;
-          height: 20px;
-          margin: auto auto auto auto;
-          border-radius: 11px;
-          border: 2px solid rgba(30, 30, 30, 0.05);
-          background: rgb(0, 173, 246); /* Old browsers */
-          box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.4);
         }
 
         #legend {
@@ -230,21 +135,37 @@
           border: 1px solid;
         }
 
-        .sentimentBar {
-          background: red;
+        .subjectivityBar {
           width: 220px;
           height: 20px;
           border-radius: 50px;
+          opacity: 0.8;
+          align-self: center;
+          margin-left: 10px;
         }
+
+        a {
+          text-decoration: none;
+        }
+
+        #info-card a {
+          color: black;
+        }
+
+        #info-card a:hover {
+          color: gray;
+        }
+
+
 
     </style>
 </head>
 <body>
 <div class="container" style="flex-direction: column;">
     <div style="text-align: right;padding: 10px;">
-        <span class="headerLink">THE PROJECT</span>
-        <span class="headerLink">THE NETWORK</span>
-        <span class="headerLink">THE RESULTS</span>
+        <a href="#theproject" class="headerLink">THE PROJECT</a>
+        <a href="#mynetwork" class="headerLink">THE NETWORK</a>
+        <a href="#theresults" class="headerLink">THE RESULTS</a>
     </div>
     <center>
         <h1 class="top-title">NEUTRALITY</h1>
@@ -253,14 +174,6 @@
 </div>
 <div class="container">
   <div id="mynetwork"></div>
-  <!-- <div id="loadingBar">
-    <div class="outerBorder">
-      <div id="text">0%</div>
-      <div id="border">
-        <div id="bar"></div>
-      </div>
-    </div>
-  </div> -->
   <div id="settings">
     <div style="padding: 0px 20px 20px 20px">
       <h1>Network Settings</h1>
@@ -270,13 +183,6 @@
       <label for="colors">Subjectivity Level</label><br>
       <input type="radio" id="pictures" name="show" value="pictures" onclick="changeNodeImage(this.value)">
       <label for="pictures">Pictures</label><br><br>
-
-      <div style="font-size: 1.17em;">Link by</div>
-      <hr>
-      <input type="radio" id="social_links" name="link" value="social_links" onclick="changeLinks(this.value)">
-      <label for="social_links">Social links</label><br>
-      <input type="radio" id="author_links" name="link" value="author_links" onclick="changeLinks(this.value)">
-      <label for="author_links">Author links</label><br><br>
 
       <div style="font-size: 1.17em;">Change subjectivity language</div>
       <hr>
@@ -300,9 +206,6 @@
         <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" class="flag">
         <div style="align-self: center;padding-left: 15px;">POLISH</div>
       </div>
-
-
-
 
     </div>
     <div id="legend">
@@ -334,28 +237,30 @@
       <div style="display:flex; justify-content: space-between;">
         <span>Number of sources</span>
         <span id="numSources">100</span>
-      </div>
-      <div style="display:flex; justify-content: space-between;">
-        <span>Languages</span>
-        <span id="numLanguages">English, French, German</span>
-      </div>
+      </div>      
       <br>
       <div style="text-align-last: left;">Subjectivity levels</div>
       <hr style="margin-top: 0px;">
-      <div style="display:flex; flex-direction: row;">
-        <div style="display:flex; flex-direction: column; row-gap: 5px;">
+      <div style="display:flex; flex-direction: column; row-gap: 15px; margin-top: 20px;">
+        <div id="engSubjCard" style="display:flex; flex-direction: row;">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Flag_of_Great_Britain_%281707%E2%80%931800%29.svg/2560px-Flag_of_Great_Britain_%281707%E2%80%931800%29.svg.png" class="flag">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" class="flag">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" class="flag">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" class="flag">
-          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" class="flag">
+          <div id="engSubj" class="subjectivityBar"></div>
         </div>
-        <div style="display:flex; flex-direction: column; row-gap: 5px;padding-left: 10px;justify-content: space-around;">
-          <div id="engSent" class="sentimentBar"></div>
-          <div id="gerSent" class="sentimentBar"></div>
-          <div id="frcSent" class="sentimentBar"></div>
-          <div id="itaSent" class="sentimentBar"></div>
-          <div id="polSent" class="sentimentBar"></div>
+        <div id="gerSubjCard" style="display:flex; flex-direction: row;">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/1200px-Flag_of_Germany.svg.png" class="flag">
+          <div id="gerSubj" class="subjectivityBar"></div>
+        </div>
+        <div id="frcSubjCard" style="display:flex; flex-direction: row;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Flag_of_France_%281794%E2%80%931815%2C_1830%E2%80%931958%29.svg" class="flag">
+          <div id="frcSubj" class="subjectivityBar"></div>
+        </div>
+        <div id="itaSubjCard" style="display:flex; flex-direction: row;">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/2560px-Flag_of_Italy.svg.png" class="flag">
+          <div id="itaSubj" class="subjectivityBar"></div>
+        </div>
+        <div id="polSubjCard" style="display:flex; flex-direction: row;">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/1200px-Flag_of_Poland.svg.png" class="flag">
+          <div id="polSubj" class="subjectivityBar"></div>
         </div>
       </div>
     </center>
@@ -364,13 +269,24 @@
 
 <script type="text/javascript">
 
+    $(document).ready(function() {
+          document.getElementById('eng').className = 'languageClicked';      
+          document.getElementById('colors').checked = true;
+    });
+
     function buildSocialNodesAndEdges(){
       <% @nazisNodes.each do |node| %>
         v = <%= node['Subjectivity Level'].to_f %>;
-        sentiment = v/<%= @maxSentiment %>;
-        sentimentH =  v+0.2/<%= @maxSentiment %>;
-        sentimentMapping = "rgb("+evaluate_cmap(sentiment, 'RdYlGn', true).toString()+")";
-        sentimentMappingH = "rgb("+evaluate_cmap(sentimentH, 'RdYlGn', true).toString()+")";
+        engSubjectivity = v/<%= @maxSubjectivity %>;
+        engSubjectivityMapping = "rgb("+evaluate_cmap(engSubjectivity, 'RdYlGn', true).toString()+")";
+        gerSubjectivity = v/<%= @maxSubjectivity %>;
+        gerSubjectivityMapping = "rgb("+evaluate_cmap(gerSubjectivity, 'RdYlGn', true).toString()+")";
+        frcSubjectivity = v/<%= @maxSubjectivity %>;
+        frcSubjectivityMapping = "rgb("+evaluate_cmap(frcSubjectivity, 'RdYlGn', true).toString()+")";
+        itaSubjectivity = v/<%= @maxSubjectivity %>;
+        itaSubjectivityMapping = "rgb("+evaluate_cmap(itaSubjectivity, 'RdYlGn', true).toString()+")";
+        polSubjectivity = v/<%= @maxSubjectivity %>;
+        polSubjectivityMapping = "rgb("+evaluate_cmap(polSubjectivity, 'RdYlGn', true).toString()+")";
         <% 
           name = node['Name']
           name = name.gsub("_"," ")
@@ -381,14 +297,27 @@
             // shape: 'circularImage',
             image: 'images/Hitler_portrait_crop.jpeg',
             color: {
-              background: sentimentMapping,
-              border: sentimentMapping,
+              background: engSubjectivityMapping,
+              border: engSubjectivityMapping,
               highlight:{
-                background: sentimentMapping,
+                background: engSubjectivityMapping,
                 border: "white"
               } 
             },
-            label: '<%= name %>'
+            label: '<%= name %>',
+            permissions: 'Blue Lock',
+            numAuthors: '1000',
+            numSources: '120',
+            engSubjectivity: engSubjectivity,
+            engSubjectivityMapping: engSubjectivityMapping,
+            gerSubjectivity: gerSubjectivity,
+            gerSubjectivityMapping: gerSubjectivityMapping,
+            frcSubjectivity: frcSubjectivity,
+            frcSubjectivityMapping: frcSubjectivityMapping,
+            itaSubjectivity: itaSubjectivity,
+            itaSubjectivityMapping: itaSubjectivityMapping,
+            polSubjectivity: polSubjectivity,
+            polSubjectivityMapping: polSubjectivityMapping
         });
       <% end %>
 
@@ -411,47 +340,9 @@
         <% end %>
     }
 
-    function buildAuthorNodesAndEdges(){
-      <% @authorNodes.each do |node| %>
-        v = <%= node['Subjectivity Level'].to_f %>;
-        sentiment = v/<%= @maxSentiment %>;
-        sentimentH =  v+0.2/<%= @maxSentiment %>;
-        sentimentMapping = "rgb("+evaluate_cmap(sentiment, 'RdYlGn', true).toString()+")";
-        sentimentMappingH = "rgb("+evaluate_cmap(sentimentH, 'RdYlGn', true).toString()+")";
-        <% 
-          name = node['Name']
-          name = name.gsub("_"," ")
-        %>
-        authorNodes.add({
-            id: '<%= node['Name'] %>',
-            shape: 'dot',
-            // shape: 'circularImage',
-            image: 'images/Hitler_portrait_crop.jpeg',
-            color: {
-              background: sentimentMapping,
-              border: sentimentMapping,
-              highlight:{
-                background: sentimentMapping,
-                border: sentimentMappingH
-              } 
-            },
-            label: '<%= name %>',
-            size: '<%= node['NumAuthors'] %>'
-        });
-      <% end %>
-
-      <% @authorLinks.each do |link| %>
-        authorEdges.add({from: '<%= link['Source Node']%>', to: '<%=link['Target Node']%>', value: '<%=link['Weight']%>'});
-      <% end %>
-    }
-
     var socialNodes = new vis.DataSet([]);
     var socialEdges = new vis.DataSet([]);
     buildSocialNodesAndEdges();
-
-    var authorNodes = new vis.DataSet([]);
-    var authorEdges = new vis.DataSet([]);
-    buildAuthorNodesAndEdges();
 
     var GCCnodes = new vis.DataSet([]);
     buildGCCNodes();
@@ -460,8 +351,6 @@
     var edges = socialEdges;
     var network, allNodes;
     var highlightActive = false;
-    var authorActive = false;
-
 
     function redrawAll() {
       var container = document.getElementById("mynetwork");
@@ -496,23 +385,6 @@
             forceDirection: "none"
           }
         },
-        //FOR THE LOADING BAR
-        // physics: {
-        //   stabilization: {
-        //       enabled: true,
-        //       fit: true
-        //   },
-        //   solver: 'forceAtlas2Based',
-        //   forceAtlas2Based: {
-        //     theta: 0.8,
-        //     gravitationalConstant: -1000,
-        //     centralGravity: 0.01,
-        //     springConstant: 0.08,
-        //     springLength: 3000,
-        //     damping: 0.1,
-        //     avoidOverlap: 1
-        //   }
-        // },
         // STABILIZATION PROCESS SHOWN
         physics: {
           stabilization: false,
@@ -540,41 +412,14 @@
       allNodes = nodes.get({ returnType: "Object" });
 
       // SET NODE SIZE ACCORDING TO THE DEGREE
-      if (!authorActive){
-        updateNodeSize();
-      }
-
+      updateNodeSize();
+      
       // LISTENERS FOR NODE CLICK ACTION
       network.on('click', function(properties) {
           neighbourhoodHighlight(properties);
           toggleInfoCard(properties);
       });
 
-      // DISABLE PHYSICS
-      // network.on("stabilizationIterationsDone", function () {
-      //     network.setOptions( { physics: false } );
-      // });
-
-      // network.on("stabilizationProgress", function (params) {
-      //   var maxWidth = 496;
-      //   var minWidth = 20;
-      //   var widthFactor = params.iterations / params.total;
-      //   var width = Math.max(minWidth, maxWidth * widthFactor);
-
-      //   document.getElementById("bar").style.width = width + "px";
-      //   document.getElementById("text").innerText =
-      //     Math.round(widthFactor * 100) + "%";
-      // });
-      // network.once("stabilizationIterationsDone", function () {
-      //   document.getElementById("text").innerText = "100%";
-      //   document.getElementById("bar").style.width = "496px";
-      //   document.getElementById("loadingBar").style.opacity = 0;
-      //   // really clean the dom element
-      //   setTimeout(function () {
-      //     document.getElementById("loadingBar").style.display = "none";
-      //   }, 500);
-      // });
-      
       fitAnimated();
 
     }
@@ -675,18 +520,65 @@
 
     function toggleInfoCard(properties){
         if (properties && nodes.get(properties.nodes) != ""){
+          //SET INFO ABOUT NAME AND PICTURE
           var clickedNodes = nodes.get(properties.nodes);
           $('#info-card-img').attr("src",clickedNodes[0]['image']);
-          $('#cardname').text(clickedNodes[0]['label']);
+          $('#cardname').html("<a href='https://wikipedia.org/wiki/"+clickedNodes[0]['label']+"' target='_blank'>"+clickedNodes[0]['label']+"</a>");
+
+          //SET ARTICLE ATTRIBUTES
+          $('#permissions').text(clickedNodes[0]['permissions']);
+          $('#numAuthors').text(clickedNodes[0]['numAuthors']);
+          $('#numSources').text(clickedNodes[0]['numSources']);
+
+          //SET SUBJECTIVITY BARS VALUES AND COLORS
+          var engSubjectivityScaled = clickedNodes[0]['engSubjectivity'] * 220;
+          $('#engSubj').css({'background': clickedNodes[0]['engSubjectivityMapping'],
+                              'width': engSubjectivityScaled+"px"});
+          if (clickedNodes[0]['engSubjectivity'] == 0){
+              $('#engSubjCard').css('display','none');
+          }
+          var gerSubjectivityScaled = clickedNodes[0]['gerSubjectivity'] * 220;
+          $('#gerSubj').css({'background': clickedNodes[0]['gerSubjectivityMapping'],
+                              'width': gerSubjectivityScaled+"px"});
+          if (clickedNodes[0]['gerSubjectivity'] == 0){
+              console.log(clickedNodes[0]['gerSubjectivity']);
+              $('#gerSubjCard').css('display','none');
+          }
+          var frcSubjectivityScaled = clickedNodes[0]['frcSubjectivity'] * 220;
+          $('#frcSubj').css({'background': clickedNodes[0]['frcSubjectivityMapping'],
+                              'width': frcSubjectivityScaled+"px"});
+          if (clickedNodes[0]['frcSubjectivity'] == 0){
+              $('#frcSubjCard').css('display','none');
+          }
+          var itaSubjectivityScaled = clickedNodes[0]['itaSubjectivity'] * 220;
+          $('#itaSubj').css({'background': clickedNodes[0]['itaSubjectivityMapping'],
+                              'width': itaSubjectivityScaled+"px"});
+          if (clickedNodes[0]['itaSubjectivity'] == 0){
+              $('#itaSubjCard').css('display','none');
+          }
+          var polSubjectivityScaled = clickedNodes[0]['polSubjectivity'] * 220;
+          $('#polSubj').css({'background': clickedNodes[0]['polSubjectivityMapping'],
+                              'width': polSubjectivityScaled+"px"});
+          if (clickedNodes[0]['polSubjectivity'] == 0){
+              $('#polSubjCard').css('display','none');
+          }
+
           $('#info-card').fadeIn();
         }
         else {
-          $('#cardname').text('');
+          //EVERYTHING IS RESET
           $('#info-card').fadeOut();
+          $('#cardname').text('');
           $('#info-card').promise().done(function(){
-              // will be called when all the animations on the queue finish
+              // will be called when all the animations finish
               $('#info-card-img').attr("src",'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg');
           });
+          $('#engSubjCard').css('display','flex');
+          $('#gerSubjCard').css('display','flex');
+          $('#frcSubjCard').css('display','flex');
+          $('#itaSubjCard').css('display','flex');
+          $('#polSubjCard').css('display','flex');
+
         }
     }
 
@@ -715,29 +607,44 @@
     function changeLanguage(id){
       document.getElementsByClassName('languageClicked')[0].className = 'language';
       document.getElementById(id).className = 'languageClicked';
-    }
 
-    function changeLinks(value){
-      // if(value=="author_links"){
-      //   author = true;
-      //   nodes = authorNodes;
-      //   edges = authorEdges;
-      // }
-      // else if(value=="social_links"){
-      //   author = false; 
-      //   nodes = socialNodes;
-      //   edges = socialEdges;
-      // }
-      // redrawAll();
+      if (id == "eng"){
+        for (var nodeId in allNodes) {
+          allNodes[nodeId].color = {background: allNodes[nodeId].engSubjectivityMapping, border: allNodes[nodeId].engSubjectivityMapping, highlight: {background: allNodes[nodeId].engSubjectivityMapping, border: "white"}};
+        }
+      }
+      else if (id == "ger"){
+        for (var nodeId in allNodes) {
+          allNodes[nodeId].color = {background: allNodes[nodeId].gerSubjectivityMapping, border: allNodes[nodeId].gerSubjectivityMapping, highlight: {background: allNodes[nodeId].gerSubjectivityMapping, border: "white"}};
+        }
+      }
+      else if (id == "frc"){
+        for (var nodeId in allNodes) {
+          allNodes[nodeId].color = {background: allNodes[nodeId].frcSubjectivityMapping, border: allNodes[nodeId].frcSubjectivityMapping, highlight: {background: allNodes[nodeId].frcSubjectivityMapping, border: "white"}};
+        }
+      }
+      else if (id == "ita"){
+        for (var nodeId in allNodes) {
+          allNodes[nodeId].color = {background: allNodes[nodeId].itaSubjectivityMapping, border: allNodes[nodeId].itaSubjectivityMapping, highlight: {background: allNodes[nodeId].itaSubjectivityMapping, border: "white"}};
+        }
+      }
+      else if (id == "pol"){
+        for (var nodeId in allNodes) {
+          allNodes[nodeId].color = {background: allNodes[nodeId].polSubjectivityMapping, border: allNodes[nodeId].polSubjectivityMapping, highlight: {background: allNodes[nodeId].polSubjectivityMapping, border: "white"}};
+        }
+      }
+      
+      var updateArray = [];
+      for (nodeId in allNodes) {
+        if (allNodes.hasOwnProperty(nodeId)) {
+          updateArray.push(allNodes[nodeId]);
+        }
+      }
+      nodes.update(updateArray);
+
     }
 
     redrawAll();
-
-    $(document).ready(function() {
-        document.getElementById('eng').className = 'languageClicked';      
-        document.getElementById('colors').checked = true;
-        document.getElementById('social_links').checked = true;      
-    });
 
 
 </script>
