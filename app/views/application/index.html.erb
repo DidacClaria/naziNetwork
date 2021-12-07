@@ -221,7 +221,7 @@
     <img src="https://www.svgrepo.com/show/83454/cross.svg" onclick="toggleInfoCard();" width="12" height="12" style="padding-top: 20px;padding-left: 20px;position: absolute; top:0%;">
     <center style="padding:20px">
       <div class="circular--portrait">
-        <img id="info-card-img" src="https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"></img>
+        <img id="info-card-img" src="" onerror="this.src='https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';"></img>
       </div>
       <div id='cardname' style="font-size: 2em;"></div>
       <div style="text-align-last: left;">Article Attributes</div>
@@ -295,7 +295,7 @@
             id: '<%= node['Name'] %>',
             shape: 'dot',
             // shape: 'circularImage',
-            image: 'images/Hitler_portrait_crop.jpeg',
+            image: 'images/nazi_images/<%= node['Name'] %>.png',
             color: {
               background: engSubjectivityMapping,
               border: engSubjectivityMapping,
@@ -358,7 +358,7 @@
         nodes:{
           borderWidth: 0,
           borderWidthSelected: 3,
-          brokenImage:undefined,
+          brokenImage: "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
           fixed: false,
           font: {
             color: '#343434',
