@@ -225,7 +225,7 @@
     </div>
     <div class="figure">
       <iframe width="607px" height="340px"
-      src="https://youtu.be/hIWkuD-2x5s">
+      src="https://www.youtube.com/embed/hIWkuD-2x5s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
       </iframe>
     </div>
   </div>
@@ -314,16 +314,12 @@
       <hr style="margin-top: 0px;">
       <div style="display:flex; justify-content: space-between;">
         <span>Edit Permissions</span>
-        <span id="editpermissions">Blue Lock</span>
+        <span id="editpermissions"></span>
       </div>
       <div style="display:flex; justify-content: space-between;">
         <span>Number of authors</span>
-        <span id="numAuthors">1000</span>
-      </div>
-      <div style="display:flex; justify-content: space-between;">
-        <span>Number of sources</span>
-        <span id="numSources">100</span>
-      </div>      
+        <span id="numAuthors"></span>
+      </div>     
       <br>
       <div style="text-align-last: left;">Subjectivity levels</div>
       <hr style="margin-top: 0px;">
@@ -385,7 +381,7 @@
   </div>
   <div style="display: flex;flex-direction: row;align-items: center; gap: 40px">
     <div>The data extracted and used for this visualization can be found here:</div>
-      <a id="downloadDataset" target='_blank' href='/data/nazi_attributes.csv'>
+      <a id="downloadDataset" target='_blank' href='/data/naziNodes.csv'>
         <div class="logo-container">
           <img src="/images/folder.png" width="30px"></img>
         </div>
@@ -404,16 +400,20 @@
 
     function buildSocialNodesAndEdges(){
       <% @nazisNodes.each do |node| %>
-        v = <%= node['Subjectivity Level'].to_f %>;
-        engSubjectivity = v/<%= @maxSubjectivity %>;
+        v = <%= node['Subjectivity en'].to_f %>;
+        engSubjectivity = v/<%= @maxSubjectivityEn %>;
         engSubjectivityMapping = "rgb("+evaluate_cmap(engSubjectivity, 'RdYlGn', true).toString()+")";
-        gerSubjectivity = v/<%= @maxSubjectivity %>;
+        v = <%= node['Subjectivity de'].to_f %>;
+        gerSubjectivity = v/<%= @maxSubjectivityDe %>;
         gerSubjectivityMapping = "rgb("+evaluate_cmap(gerSubjectivity, 'RdYlGn', true).toString()+")";
-        frcSubjectivity = v/<%= @maxSubjectivity %>;
+        v = <%= node['Subjectivity fr'].to_f %>;
+        frcSubjectivity = v/<%= @maxSubjectivityFr %>;
         frcSubjectivityMapping = "rgb("+evaluate_cmap(frcSubjectivity, 'RdYlGn', true).toString()+")";
-        itaSubjectivity = v/<%= @maxSubjectivity %>;
+        v = <%= node['Subjectivity it'].to_f %>;        
+        itaSubjectivity = v/<%= @maxSubjectivityIt %>;
         itaSubjectivityMapping = "rgb("+evaluate_cmap(itaSubjectivity, 'RdYlGn', true).toString()+")";
-        polSubjectivity = v/<%= @maxSubjectivity %>;
+        v = <%= node['Subjectivity pl'].to_f %>;        
+        polSubjectivity = v/<%= @maxSubjectivityPl %>;
         polSubjectivityMapping = "rgb("+evaluate_cmap(polSubjectivity, 'RdYlGn', true).toString()+")";
         <% 
           name = node['Name']
@@ -437,9 +437,8 @@
               } 
             },
             label: '<%= name %>',
-            permissions: 'Blue Lock',
-            numAuthors: '1000',
-            numSources: '120',
+            permissions: '<%= node['Protection'] %>',
+            numAuthors: '<%= node['Number of Authors'] %>',
             engSubjectivity: engSubjectivity,
             engSubjectivityMapping: engSubjectivityMapping,
             gerSubjectivity: gerSubjectivity,
@@ -458,26 +457,9 @@
       <% end %>
     }
 
-    function buildGCCNodes(){
-
-        <% @nazisNodesGCC.each do |node| %>
-            GCCnodes.add({
-                id: '<%= node['0'] %>',
-                shape: 'circularImage',
-                image: '/Hitler_portrait_crop.jpeg',
-                label: '<%= node['0'] %>',
-                widthMin: 20,
-                widthMax: 20
-            });
-        <% end %>
-    }
-
     var socialNodes = new vis.DataSet([]);
     var socialEdges = new vis.DataSet([]);
     buildSocialNodesAndEdges();
-
-    var GCCnodes = new vis.DataSet([]);
-    buildGCCNodes();
     
     var nodes = socialNodes;
     var edges = socialEdges;
@@ -652,15 +634,19 @@
 
     function toggleInfoCard(properties){
         if (properties && nodes.get(properties.nodes) != ""){
+          $('#engSubjCard').css('display','flex');
+          $('#gerSubjCard').css('display','flex');
+          $('#frcSubjCard').css('display','flex');
+          $('#itaSubjCard').css('display','flex');
+          $('#polSubjCard').css('display','flex');
           //SET INFO ABOUT NAME AND PICTURE
           var clickedNodes = nodes.get(properties.nodes);
           $('#info-card-img').attr("src",clickedNodes[0]['image']);
           $('#cardname').html("<a href='https://wikipedia.org/wiki/"+clickedNodes[0]['label']+"' target='_blank'>"+clickedNodes[0]['label']+"</a>");
 
           //SET ARTICLE ATTRIBUTES
-          $('#permissions').text(clickedNodes[0]['permissions']);
+          $('#editpermissions').text(clickedNodes[0]['permissions']);
           $('#numAuthors').text(clickedNodes[0]['numAuthors']);
-          $('#numSources').text(clickedNodes[0]['numSources']);
 
           //SET SUBJECTIVITY BARS VALUES AND COLORS
           var engSubjectivityScaled = clickedNodes[0]['engSubjectivity'] * 220;
