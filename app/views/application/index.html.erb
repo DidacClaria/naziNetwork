@@ -221,7 +221,9 @@
   <div class="two-column">
     <div class="text">
       <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
+      <p>There’s a lot of articles on wikipedia, written by an even larger number of people. The way that wikipedia uses open collaboration, means that knowledge is crowd sourced from around the entire world, and that the contents is read just as widely. The problem is that this makes wikipedia a prime source for misinformation, and content bias, as articles can be written and editted by anyone.
+      <br>
+      This data analysis investigates the neutrality of wikipedia’s articles, by focussing on an area with high potential for ideological bias, namely the representation of National Socialist politicians and government employees in WWII Germany. i.e. Nazis.</p>
     </div>
     <div class="figure">
       <iframe width="607px" height="340px"
@@ -234,14 +236,19 @@
       <img src="/images/pagesExtracted.png" width="75%"></img>
     </div>
     <div class="text">
-      <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
+      <h2>So many pages</h2>
+      <p>The dataset has been compiled from wiki pages of individual nazis, and for each page the entire text has been extracted and parsed. Not only for English, but also for the corresponding pages in German , French, Polish and italian, so that we could put the subjectivity found on the English side of Wikipedia into context. The pages not in english had to be translated in order to be used in the analysis - the script to do this took over 20 hours to complete!
+      </p>
     </div>
   </div>
   <div class="two-column">
     <div class="text">
-      <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
+      <h2>And a lot of authors too</h2>
+      <p>They say that ‘too many chefs spoil the stew’. Maybe not so with edtors on wikipedia pages.
+      <br>
+      We found that some of the most detailed pages we extracted had more than 1000 editors (or ‘authors’). Unsurprisingly, Adolf Hitler was a top-scorer with more than 8700 editors!
+      <br>
+      Fun fact: when we tried to create a network linked by common authors, we couldn’t, because there were so many links that the network would not even process, much less load.</p>
     </div>
     <div class="figure">
       <img src="/images/authorCount.png" width="60%"></img>
@@ -252,8 +259,12 @@
       <img src="/images/pageProtection.png" width="75%"></img>
     </div>
     <div class="text">
-      <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
+      <h2>But not a lot of locks</h2>
+      <p>It was a little surprising to find though, that not a lot of pages were actually locked. Or even had any protection at all. Based purely on the protection levels on the wikipedia pages, anyone would be able to create an account and make significant changes to 98% of the studied pages, basically without oversight.
+      <br>
+      Well, until someone else noticed what was going on, of course.
+      <br><br>
+      Given all of this information, and a lot of text analysis, we were able to draw a network. You can play around with it below. Notice how the level of subjectivity changes based on the language you choose. We’ll talk more about that in the results below.</p>
     </div>
   </div>
 </div>
@@ -299,7 +310,7 @@
       <img src="/images/colorLegend.png" id="legendBar"></img>
       <div style="display: flex;justify-content: space-between; color: white;">
         <span>0</span>
-        <span>1</span>
+        <span id="scalingValue">1</span>
       </div>
     </div>  
   </div>
@@ -351,21 +362,13 @@
 <div id="theresults" class="header" >THE RESULTS</div>
 <div class="container" style="display: flex; flex-direction: column; height: fit-content;">
   <div class="two-column">
-    <div class="figure">
-      <img src="/images/pagesExtracted.png" width="75%"></img>
-    </div>
     <div class="text">
-      <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
-    </div>
-  </div>
-  <div class="two-column">
-    <div class="figure">
-      <img src="/images/pagesExtracted.png" width="75%"></img>
-    </div>
-    <div class="text">
-      <h2>What are we looking at?</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultricies libero quis urna fringilla finibus. Vivamus iaculis ipsum mauris, vitae convallis est dictum eget. Curabitur ut arcu sollicitudin, tincidunt purus quis, sodales odio. Fusce ut scelerisque odio. In dignissim a dolor et consectetur. Sed nec est diam. Vestibulum molestie eros vel libero iaculis, et consequat odio molestie. Sed ante nulla, elementum sit amet faucibus nec, malesuada ut mauris. Donec pulvinar odio nec urna viverra, quis elementum risus maximus. Curabitur eget aliquet magna. Curabitur ultricies lectus eget lacus accumsan, ac tempor justo ullamcorper. Fusce eget tellus ac velit placerat commodo eget at elit. Vestibulum vulputate magna vel commodo pretium. Ut ultrices molestie dolor vulputate viverra. Nulla convallis dignissim augue, eu ornare nunc bibendum sit amet. Suspendisse ut bibendum leo.</p>
+      <h2>So are the Nazi pages neutral?</h2>
+      <p>Honestly, maybe. 
+      <br><br>
+      Despite what the colours in the network visualization above might suggest, the majority of values measured by the subjectivity algorithm, are actually within the neutrality limits for that score, which is 0.5! That means that going purely by this measure, these articles actually adhere to the ‘neutral point of view’ guidelines set out by wikipedia.
+      <br><br>
+      There’s still some interesting questions to answer, such as ‘does  having more authors moderate the text, and make it more neutral?’ or ‘Are some languages more subjective when it comes to nazis?’. If you’re interested, we’ve tried to answer some of these in the explainer notebook (link below).</p>
     </div>
   </div>
 </div>
@@ -381,7 +384,7 @@
   </div>
   <div style="display: flex;flex-direction: row;align-items: center; gap: 40px">
     <div>The data extracted and used for this visualization can be found here:</div>
-      <a id="downloadDataset" target='_blank' href='/data/naziNodes.csv'>
+      <a id="downloadDataset" target='_blank' href='/data/naziNodes.json'>
         <div class="logo-container">
           <img src="/images/folder.png" width="30px"></img>
         </div>
@@ -396,6 +399,7 @@
     $(document).ready(function() {
           document.getElementById('eng').className = 'languageClicked';      
           document.getElementById('colors').checked = true;
+          document.getElementById('scaling').text = <%= @maxSubjectivityEn %>;
     });
 
     function buildSocialNodesAndEdges(){
