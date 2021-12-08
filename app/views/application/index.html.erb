@@ -399,7 +399,7 @@
     $(document).ready(function() {
           document.getElementById('eng').className = 'languageClicked';      
           document.getElementById('colors').checked = true;
-          document.getElementById('scaling').text = <%= @maxSubjectivityEn %>;
+          document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityEn.round(2) %>;
     });
 
     function buildSocialNodesAndEdges(){
@@ -734,26 +734,31 @@
         for (var nodeId in allNodes) {
           allNodes[nodeId].color = {background: allNodes[nodeId].engSubjectivityMapping, border: allNodes[nodeId].engSubjectivityMapping, highlight: {background: allNodes[nodeId].engSubjectivityMapping, border: "white"}};
         }
+        document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityEn.round(2) %>;
       }
       else if (id == "ger"){
         for (var nodeId in allNodes) {
           allNodes[nodeId].color = {background: allNodes[nodeId].gerSubjectivityMapping, border: allNodes[nodeId].gerSubjectivityMapping, highlight: {background: allNodes[nodeId].gerSubjectivityMapping, border: "white"}};
         }
+        document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityDe.round(2) %>;
       }
       else if (id == "frc"){
         for (var nodeId in allNodes) {
           allNodes[nodeId].color = {background: allNodes[nodeId].frcSubjectivityMapping, border: allNodes[nodeId].frcSubjectivityMapping, highlight: {background: allNodes[nodeId].frcSubjectivityMapping, border: "white"}};
         }
+        document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityFr.round(2) %>;
       }
       else if (id == "ita"){
         for (var nodeId in allNodes) {
           allNodes[nodeId].color = {background: allNodes[nodeId].itaSubjectivityMapping, border: allNodes[nodeId].itaSubjectivityMapping, highlight: {background: allNodes[nodeId].itaSubjectivityMapping, border: "white"}};
         }
+        document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityIt.round(2) %>;
       }
       else if (id == "pol"){
         for (var nodeId in allNodes) {
           allNodes[nodeId].color = {background: allNodes[nodeId].polSubjectivityMapping, border: allNodes[nodeId].polSubjectivityMapping, highlight: {background: allNodes[nodeId].polSubjectivityMapping, border: "white"}};
         }
+        document.getElementById('scalingValue').innerHTML = <%= @maxSubjectivityPl.round(2) %>;
       }
       
       var updateArray = [];
